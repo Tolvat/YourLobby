@@ -1,3 +1,6 @@
 name: YourLobby
 main: pl.tolvat.bukkit.yourlobby.YourLobby
 version: 1.6.2
+commands:
+    lobby:
+        description: Just use it.

@@ -1,14 +1,19 @@
 package pl.tolvat.bukkit.yourlobby;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class YourLobby extends JavaPlugin {
 	
-	/** Release Date of YourLobby. It's simple to understand it. */
+	/** Release date of YourLobby. It's simple to understand it. */
 	private static int RELEASE_DATE = 1607201301;
 	
 	/** Versions - better not to change that. */
@@ -20,6 +25,9 @@ public class YourLobby extends JavaPlugin {
 	
 	/** PluginManager instance */
 	private PluginManager pm;
+	
+	/** Configuration */
+	private FileConfiguration config;
 	
 	/**
 	 * This function is executed when plugin is starting.
@@ -33,7 +41,11 @@ public class YourLobby extends JavaPlugin {
 		
 		pm = getServer().getPluginManager();
 		
+		config = getConfig();
 		
+		pm.registerEvents(new JoinEvent(this), this);
+		
+		getCommand("lobby").setExecutor(new LobbyCommand(this));
 		
 		log("INFO", "Plugin has been started.");
 	}
@@ -55,4 +67,23 @@ public class YourLobby extends JavaPlugin {
 	{
 		logger.info("[" + prefix + "] [YourLobby for Craftbukkit " + PLUGIN_VERSION + "]: " + message);
 	}
+	
+	/**
+	 * Returns FileConfiguration instance.
+	 * @return 
+	 * @return FileConfiguration config
+	 */
+	public FileConfiguration getConfiguration()
+	{
+		return config;
+	}
+	
+	/**
+	 * Returns plugin version
+	 * @return String plugin version
+	 */
+	public String getVersion() {
+		return PLUGIN_VERSION;
+	}
+	
 }
