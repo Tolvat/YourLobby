@@ -2,6 +2,8 @@ package pl.tolvat.bukkit.yourlobby;
 
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class YourLobby extends JavaPlugin {
@@ -16,14 +18,22 @@ public class YourLobby extends JavaPlugin {
 	/** Logger instance */
 	private Logger logger = Logger.getLogger("Minecraft");
 	
+	/** PluginManager instance */
+	private PluginManager pm;
+	
 	/**
 	 * This function is executed when plugin is starting.
 	 */
 	public void onEnable()
 	{
-		if(getServer().getVersion() != BUKKIT_VERSION){
+		if(!Bukkit.getVersion().equals(BUKKIT_VERSION))
+		{
 			log("WARNING", "YourLobby may not compatibile with your Craftbukkit version!");
 		}
+		
+		pm = getServer().getPluginManager();
+		
+		
 		
 		log("INFO", "Plugin has been started.");
 	}
